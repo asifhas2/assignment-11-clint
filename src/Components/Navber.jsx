@@ -4,12 +4,12 @@ import { NavLink } from 'react-router';
 const Navber = () => {
 
     const links =<>
-    <NavLink to='/'><li><a>Home</a></li></NavLink>
-    <NavLink to='/dashboard'><li><a>Dashboard</a></li></NavLink>
-    <NavLink to='/dashboard/add-lesson'><li><a >add-lesson</a></li></NavLink>
-    <NavLink to='/dashboard/my-lessons'><li><a>my-lessons</a></li></NavLink>
-    <NavLink to='/Public-lessons'><li><a >Public Lessons</a></li></NavLink>
-    <NavLink to='/upgrade'><li><a >upgrade</a></li></NavLink>
+    <NavLink to='/'><li className='text-[16px] font-semibold btn btn-ghost'>Home</li></NavLink>
+    <NavLink to='/dashboard'><li className='text-[16px] font-semibold btn btn-ghost'>Dashboard</li></NavLink>
+    <NavLink to='/dashboard/add-lesson'><li className='text-[16px] font-semibold btn btn-ghost'>add-lesson</li></NavLink>
+    <NavLink to='/dashboard/my-lessons'><li className='text-[16px] font-semibold btn btn-ghost'>my-lessons</li></NavLink>
+    <NavLink to='/Public-lessons'><li className='text-[16px] font-semibold btn btn-ghost'>Public Lessons</li></NavLink>
+    <NavLink to='/upgrade'><li className='text-[16px] font-semibold btn btn-ghost'>upgrade</li></NavLink>
     
     </>
 
@@ -38,8 +38,8 @@ const Navber = () => {
     </ul>
   </div>
   <div className="navbar-end">
-   <NavLink to='/login'> <a className="btn">Login</a></NavLink>
-   <NavLink to='/register'> <a className="btn">Signup</a></NavLink>
+   <NavLink to='/login'> <span className="btn">Login</span></NavLink>
+   <NavLink to='/register'> <span className="btn">Signup</span></NavLink>
   </div>
 </div>
     );
