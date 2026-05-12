@@ -8,50 +8,56 @@ import PublicLesson from "../Pages/PublicLesson/PublicLesson";
 import Pricing from "../Pages/Pricing/Pricing";
 import Login from "../Pages/Authentication/Login";
 import Register from "../Pages/Authentication/Register";
+import PaymentSuccess from "../Pages/Dashboard/User Dashboard/PaymentSuccess";
+import PaymentCenceld from "../Pages/Dashboard/User Dashboard/PaymentCenceld";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component:Root,
-    children:[
-        {
-            index:true,
-            Component:Home
-        },
-        {
-            path:'/public-lessons',
-            Component:PublicLesson
-        },
-        {
-            path:'upgrade',
-            Component:Pricing
-            
-        },
-        {
-            path:'/login',
-            Component:Login
-        },
-        {
-            path:'register',
-            Component:Register
-        }
-        
-    ]
+    Component: Root,
+    children: [
+      {
+        index: true,
+        Component: Home,
+      },
+      {
+        path: "/public-lessons",
+        Component: PublicLesson,
+      },
+      {
+        path: "upgrade",
+        Component: Pricing,
+      },
+      {
+        path: "/login",
+        Component: Login,
+      },
+      {
+        path: "register",
+        Component: Register,
+      },
+    ],
   },
   {
-    path:'/dashboard',
-    element:<Dashboard></Dashboard>,
-    children:[
-        {
-            path:'add-lesson',
-            Component:AddLesson
-        },
-        {
-            path:'my-lessons',
-            Component:MyLesson
-        },
-        
-
-    ]
-  }
+    path: "/dashboard",
+    element: <Dashboard></Dashboard>,
+    children: [
+      {
+        path: "add-lesson",
+        Component: AddLesson,
+      },
+      {
+        path: "my-lessons",
+        Component: MyLesson,
+      },
+      {
+        path: "payment-success",
+        element: <PaymentSuccess></PaymentSuccess>,
+      },
+      {
+           path:'payment-cancel',
+           element:<PaymentCenceld></PaymentCenceld>
+      }
+    ],
+  },
 ]);

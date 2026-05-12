@@ -96,7 +96,7 @@ const Navber = () => {
       <div className="navbar-end">
        <div className="mx-3">
          {/* Conditional Upgrade Button */}
-        {!isLoading && users?.plan !== "premium" && (
+        { users?.plan !== "premium" && (
           <NavLink to="/upgrade">
             <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 shadow-[0_0_20px_rgba(168,85,247,0.6)] hover:shadow-[0_0_30px_rgba(236,72,153,0.8)] hover:scale-105 transition-all duration-300">
               Free
@@ -104,7 +104,7 @@ const Navber = () => {
           </NavLink>
         )}
 
-        {!isLoading && users?.plan === "premium" && (
+        { users?.plan === "premium" && (
           <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 shadow-[0_0_20px_rgba(168,85,247,0.6)] hover:shadow-[0_0_30px_rgba(236,72,153,0.8)] hover:scale-105 transition-all duration-300">
             🚀 Go Premium
           </button>
