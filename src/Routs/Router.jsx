@@ -25,7 +25,7 @@ export const router = createBrowserRouter([
         Component: PublicLesson,
       },
       {
-        path: "upgrade",
+        path: "/upgrade",
         Component: Pricing,
       },
       {
@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
         Component: Login,
       },
       {
-        path: "register",
+        path: "/register",
         Component: Register,
       },
     ],

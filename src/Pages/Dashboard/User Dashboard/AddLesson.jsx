@@ -13,6 +13,7 @@ const AddLesson = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  console.log(user);
 
   const { data } = useQuery({
     queryKey: ["users", user?.email],
@@ -39,6 +40,9 @@ const AddLesson = () => {
       createdAt: new Date(),
       reactions: 0,
       saves: 0,
+      creatorName: user.displayName,
+      creatorPhoto: user.photoURL,
+      plan: data.plan,
     };
 
     console.log(lessonData);
@@ -48,16 +52,14 @@ const AddLesson = () => {
     console.log(res.data.insertedId);
 
     if (res.data.insertedId) {
-    //   Swal.fire({
-    //     title: "Drag me!",
-    //     icon: "success",
-    //     draggable: true,
-    //   });
+      //   Swal.fire({
+      //     title: "Drag me!",
+      //     icon: "success",
+      //     draggable: true,
+      //   });
       reset();
       navigate("/dashboard/my-lessons");
     }
-
-   
   };
 
   return (
