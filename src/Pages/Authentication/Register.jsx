@@ -3,22 +3,53 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 import SocialLogin from "./SocialLogin";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Register = () => {
+  const axiosSecure = useAxiosSecure();
+  const { user, updateUserProfile } = useAuth();
 
-    const {registerEmailPassword}=useAuth();
+  const { registerEmailPassword } = useAuth();
 
-    const handelRegister=(data)=>{
-        registerEmailPassword(data.email,data.password)
-        .then((res)=>{
-            console.log(res.user);
-        })
-        .catch(error=>{
+  const handelRegister = (data) => {
+    registerEmailPassword(data.email, data.password)
+      .then((res) => {
+        console.log(user);
+
+        const userInfo = {
+          displayName: data.name,
+          email: data.email,
+          photoURL: data.photo,
+          password: data.password,
+        };
+
+        // console.log(userInfo);
+
+        axiosSecure.post("/users", userInfo).then((res) => {
+          console.log(res.data);
+        });
+
+        // update user profile
+
+        const userProfile = {
+          displayName: data.name,
+          email: data.email,
+          photoURL: data.photo,
+          password: data.password,
+          role:"user"
+        };
+        updateUserProfile(userProfile)
+          .then(() => {
+            console.log("user profile updated");
+          })
+          .catch((error) => {
             console.log(error);
-        })
-
-
-    }
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const {
     register,
@@ -29,8 +60,10 @@ const Register = () => {
   return (
     <div className="min-h-screen flex justify-center items-center">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl  ">
-        <div  className="card-body">
-            <h1 className="text-3xl font-bold text-center mb-3">Please Register Now !</h1>
+        <div className="card-body">
+          <h1 className="text-3xl font-bold text-center mb-3">
+            Please Register Now !
+          </h1>
           <form onSubmit={handleSubmit(handelRegister)} className="fieldset">
             <label className="label">Name</label>
             <input
@@ -57,10 +90,16 @@ const Register = () => {
             />
 
             <label className="label">Password</label>
-            <input type="password"{...register('password',{required:true,
-               minLength:6,
-               pattern:/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/ 
-            })} className="input" placeholder="Password" />
+            <input
+              type="password"
+              {...register("password", {
+                required: true,
+                minLength: 6,
+                pattern: /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/,
+              })}
+              className="input"
+              placeholder="Password"
+            />
 
             <button className="btn btn-neutral mt-4">Register Now !</button>
             <div>
@@ -75,10 +114,8 @@ const Register = () => {
               </p>
             </div>
           </form>
-           <SocialLogin></SocialLogin>
+          <SocialLogin></SocialLogin>
         </div>
-        
-
       </div>
     </div>
   );

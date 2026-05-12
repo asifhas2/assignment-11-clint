@@ -1,42 +1,58 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
 import useAuth from "../Hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const Navber = () => {
-  const { user,logOut } = useAuth();
-  console.log(user);
+  const { user, logOut } = useAuth();
+  const axiosSecure = useAxiosSecure();
 
-  const handelLogout=()=>{
+  const { data: users, isLoading } = useQuery({
+    queryKey: ["upgrade", user?.email],
+    enabled: !!user?.email,
+
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user?.email}`);
+      return res.data;
+    },
+  });
+
+  console.log(users);
+
+  const handelLogout = () => {
     logOut()
-    .then(res=>{
-
-    })
-    .catch(error=>{
-
-    })
-  }
+      .then(() => {})
+      .catch(() => {});
+  };
 
   const links = (
     <>
       <NavLink to="/">
         <li className="text-[16px] font-semibold btn btn-ghost">Home</li>
       </NavLink>
+
       <NavLink to="/dashboard">
         <li className="text-[16px] font-semibold btn btn-ghost">Dashboard</li>
       </NavLink>
+
       <NavLink to="/dashboard/add-lesson">
-        <li className="text-[16px] font-semibold btn btn-ghost">add-lesson</li>
+        <li className="text-[16px] font-semibold btn btn-ghost">Add Lesson</li>
       </NavLink>
+
       <NavLink to="/dashboard/my-lessons">
-        <li className="text-[16px] font-semibold btn btn-ghost">my-lessons</li>
+        <li className="text-[16px] font-semibold btn btn-ghost">My Lessons</li>
       </NavLink>
-      <NavLink to="/Public-lessons">
+
+      <NavLink to="/public-lessons">
         <li className="text-[16px] font-semibold btn btn-ghost">
           Public Lessons
         </li>
       </NavLink>
-      <NavLink to="/upgrade">
-        <li className="text-[16px] font-semibold btn btn-ghost">upgrade</li>
+      <NavLink  to="/upgrade">
+        <li className="text-[16px] font-semibold btn btn-ghost">
+          Upgrade
+        </li>
       </NavLink>
     </>
   );
@@ -53,28 +69,47 @@ const Navber = () => {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              {" "}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
                 d="M4 6h16M4 12h8m-8 6h16"
-              />{" "}
+              />
             </svg>
           </div>
+
           <ul
-            tabIndex="-1"
+            tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             {links}
           </ul>
         </div>
+
         <a className="btn btn-ghost text-xl">daisyUI</a>
       </div>
+
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
+
       <div className="navbar-end">
+       <div className="mx-3">
+         {/* Conditional Upgrade Button */}
+        {!isLoading && users?.plan !== "premium" && (
+          <NavLink to="/upgrade">
+            <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 shadow-[0_0_20px_rgba(168,85,247,0.6)] hover:shadow-[0_0_30px_rgba(236,72,153,0.8)] hover:scale-105 transition-all duration-300">
+              Free
+            </button>
+          </NavLink>
+        )}
+
+        {!isLoading && users?.plan === "premium" && (
+          <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 shadow-[0_0_20px_rgba(168,85,247,0.6)] hover:shadow-[0_0_30px_rgba(236,72,153,0.8)] hover:scale-105 transition-all duration-300">
+            🚀 Go Premium
+          </button>
+        )}
+       </div>
         {user ? (
           <div className="dropdown dropdown-end">
             <div
@@ -92,12 +127,13 @@ const Navber = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <p className="text-[16px] font-semibold ">{user.displayName}</p>
+                <p className="text-[16px] font-semibold">{user?.displayName}</p>
               </li>
+
               <li>
                 <Link
                   to="/profile"
-                  className="justify-between text-[16px] font-semibold "
+                  className="justify-between text-[16px] font-semibold"
                 >
                   Profile
                   <span className="badge">New</span>
@@ -111,7 +147,12 @@ const Navber = () => {
               </li>
 
               <li>
-                <button onClick={handelLogout} className="text-[16px] font-semibold ">Logout</button>
+                <button
+                  onClick={handelLogout}
+                  className="text-[16px] font-semibold"
+                >
+                  Logout
+                </button>
               </li>
             </ul>
           </div>
