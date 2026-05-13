@@ -88,7 +88,7 @@ const PublicLessons = () => {
                     to={
                       isLocked
                         ? "/upgrade"
-                        : `/lesson/${lesson._id}`
+                        : `/public-lessons/${lesson._id}`
                     }
                     className={`btn btn-primary btn-sm ${
                       isLocked ? "opacity-50" : ""

@@ -32,17 +32,16 @@ const AddLesson = () => {
 
   const onSubmit = async (data) => {
     console.log(data);
-
-    // image upload করলে এখানে upload logic দিবা
-
     const lessonData = {
       ...data,
       createdAt: new Date(),
       reactions: 0,
       saves: 0,
-      creatorName: user.displayName,
-      creatorPhoto: user.photoURL,
+      creatorName: user?.displayName,
+      creatorPhoto: user?.photoURL,
       plan: data.plan,
+      email:user?.email,
+
     };
 
     console.log(lessonData);
