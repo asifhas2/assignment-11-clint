@@ -54,118 +54,99 @@ const LessonDetails = () => {
       return res.data;
     },
   });
-// comment
+  // comment
 
-// COMMENT QUERY
-const {
-  data: comments = [],
-  refetch: commentsRefetch,
-} = useQuery({
-  queryKey: ["comments", id],
+  // COMMENT QUERY
+  const { data: comments = [], refetch: commentsRefetch } = useQuery({
+    queryKey: ["comments", id],
 
-  queryFn: async () => {
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/comments/${id}`);
 
-    const res = await axiosSecure.get(
-      `/comments/${id}`
-    );
-
-    return res.data;
-  },
-});
+      return res.data;
+    },
+  });
 
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
   const [likesCount, setLikesCount] = useState(data?.reactions || 0);
 
-//   const [comments, setComments] = useState([
-//     {
-//       id: 1,
-//       name: "Rahim",
-//       comment: "Very inspiring lesson ❤️",
-//     },
-//     {
-//       id: 2,
-//       name: "Karim",
-//       comment: "This helped me a lot!",
-//     },
-//   ]);
+  //   const [comments, setComments] = useState([
+  //     {
+  //       id: 1,
+  //       name: "Rahim",
+  //       comment: "Very inspiring lesson ❤️",
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "Karim",
+  //       comment: "This helped me a lot!",
+  //     },
+  //   ]);
 
   const { register, handleSubmit, reset } = useForm();
 
- 
- const handleLike = async () => {
+  const handleLike = async () => {
+    if (!user) {
+      Swal.fire({
+        icon: "warning",
+        title: "Please Login First",
+      });
 
-  if (!user) {
+      navigate("/login");
 
-    Swal.fire({
-      icon: "warning",
-      title: "Please Login First",
-    });
+      return;
+    }
 
-    navigate("/login");
+    try {
+      const res = await axiosSecure.patch(`/lessons/like/${data._id}`);
 
-    return;
-  }
+      if (res.data.modifiedCount > 0) {
+        refetch();
 
-  try {
+        Swal.fire({
+          icon: "success",
+          title: "Liked Successfully",
+          timer: 1000,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // favorite handler
+  const handleFavorite = async () => {
+    const favoriteInfo = {
+      lessonId: data._id,
+
+      userEmail: user?.email,
+
+      title: data?.title,
+      category: data?.category,
+        tone:data?.tone,
+      image: data?.image,
+
+      createdAt: new Date(),
+    };
 
     const res = await axiosSecure.patch(
-      `/lessons/like/${data._id}`
+      `/lessons/favorite/${data._id}`,
+      favoriteInfo,
     );
 
-    if (res.data.modifiedCount > 0) {
-
+    if (res.data.updateResult.modifiedCount > 0) {
       refetch();
 
       Swal.fire({
         icon: "success",
-        title: "Liked Successfully",
+        title: "Added To Favorite",
         timer: 1000,
         showConfirmButton: false,
       });
     }
-
-  } catch (error) {
-
-    console.log(error);
-  }
-};
-
-  // favorite handler
-const handleFavorite = async () => {
-
-  const favoriteInfo = {
-
-    lessonId: data._id,
-
-    userEmail: user?.email,
-
-    title: data?.title,
-
-    image: data?.image,
-
-    createdAt: new Date(),
   };
-
-  const res = await axiosSecure.patch(
-    `/lessons/favorite/${data._id}`,
-    favoriteInfo
-  );
-
-  if (
-    res.data.updateResult.modifiedCount > 0
-  ) {
-
-    refetch();
-
-    Swal.fire({
-      icon: "success",
-      title: "Added To Favorite",
-      timer: 1000,
-      showConfirmButton: false,
-    });
-  }
-};
 
   // report handler
   const handleReport = async () => {
@@ -193,74 +174,61 @@ const handleFavorite = async () => {
         timestamp: new Date(),
       };
 
-      const res = await axiosSecure.post('/report',reportData);
-      
-        Swal.fire({
+      const res = await axiosSecure.post("/report", reportData);
+
+      Swal.fire({
         icon: "success",
         title: "Report Submitted",
       });
-     
-
-      
     }
   };
 
   // comment submit
- const onSubmit = async (formData) => {
-
-  if (!user) {
-
-    Swal.fire({
-      icon: "warning",
-      title: "Please Login First",
-    });
-
-    navigate("/login");
-
-    return;
-  }
-
-  const commentInfo = {
-
-    lessonId: id,
-
-    userName: user?.displayName,
-
-    userEmail: user?.email,
-
-    userPhoto: user?.photoURL,
-
-    comment: formData.comment,
-
-    createdAt: new Date(),
-  };
-
-  try {
-
-    const res = await axiosSecure.post(
-      "/comments",
-      commentInfo
-    );
-
-    if (res.data.insertedId) {
-
-      commentsRefetch();
-
-      reset();
-
+  const onSubmit = async (formData) => {
+    if (!user) {
       Swal.fire({
-        icon: "success",
-        title: "Comment Added",
-        timer: 1200,
-        showConfirmButton: false,
+        icon: "warning",
+        title: "Please Login First",
       });
+
+      navigate("/login");
+
+      return;
     }
 
-  } catch (error) {
+    const commentInfo = {
+      lessonId: id,
 
-    console.log(error);
-  }
-};
+      userName: user?.displayName,
+
+      userEmail: user?.email,
+
+      userPhoto: user?.photoURL,
+
+      comment: formData.comment,
+
+      createdAt: new Date(),
+    };
+
+    try {
+      const res = await axiosSecure.post("/comments", commentInfo);
+
+      if (res.data.insertedId) {
+        commentsRefetch();
+
+        reset();
+
+        Swal.fire({
+          icon: "success",
+          title: "Comment Added",
+          timer: 1200,
+          showConfirmButton: false,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -415,82 +383,48 @@ const handleFavorite = async () => {
 
       {/* COMMENT SECTION */}
       <div className="mt-16">
+        <h2 className="text-4xl font-bold mb-8">Comments</h2>
 
-  <h2 className="text-4xl font-bold mb-8">
-    Comments
-  </h2>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bg-base-200 p-6 rounded-3xl"
+        >
+          <textarea
+            {...register("comment", {
+              required: true,
+            })}
+            className="textarea textarea-bordered w-full h-32"
+            placeholder="Write your comment..."
+          ></textarea>
 
-  <form
-    onSubmit={handleSubmit(onSubmit)}
-    className="bg-base-200 p-6 rounded-3xl"
-  >
-
-    <textarea
-      {...register("comment", {
-        required: true,
-      })}
-      className="textarea textarea-bordered w-full h-32"
-      placeholder="Write your comment..."
-    ></textarea>
-
-    <button className="btn btn-primary mt-4 rounded-full">
-
-      Post Comment
-
-    </button>
-
-  </form>
-
-</div>
-<div className="space-y-5 mt-8">
-
-  {
-    comments.map((comment) => (
-
-      <div
-        key={comment._id}
-        className="bg-base-200 p-5 rounded-2xl"
-      >
-
-        <div className="flex items-center gap-4">
-
-          <img
-            src={comment?.userPhoto}
-            alt=""
-            className="w-14 h-14 rounded-full"
-          />
-
-          <div>
-
-            <h3 className="font-bold text-lg">
-
-              {comment?.userName}
-
-            </h3>
-
-            <p className="text-sm text-gray-500">
-
-              {new Date(
-                comment?.createdAt
-              ).toLocaleString()}
-
-            </p>
-
-          </div>
-
-        </div>
-
-        <p className="mt-4 text-gray-500">
-
-          {comment?.comment}
-
-        </p>
-
+          <button className="btn btn-primary mt-4 rounded-full">
+            Post Comment
+          </button>
+        </form>
       </div>
-    ))
-  }
+      <div className="space-y-5 mt-8">
+        {comments.map((comment) => (
+          <div key={comment._id} className="bg-base-200 p-5 rounded-2xl">
+            <div className="flex items-center gap-4">
+              <img
+                src={comment?.userPhoto}
+                alt=""
+                className="w-14 h-14 rounded-full"
+              />
 
-</div>
+              <div>
+                <h3 className="font-bold text-lg">{comment?.userName}</h3>
+
+                <p className="text-sm text-gray-500">
+                  {new Date(comment?.createdAt).toLocaleString()}
+                </p>
+              </div>
+            </div>
+
+            <p className="mt-4 text-gray-500">{comment?.comment}</p>
+          </div>
+        ))}
+      </div>
 
       {/* SIMILAR LESSONS */}
       <div className="mt-20">
