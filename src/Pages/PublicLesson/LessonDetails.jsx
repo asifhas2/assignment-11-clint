@@ -21,100 +21,154 @@ import {
 import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import useAuth from "../../Hooks/useAuth";
 
 const LessonDetails = () => {
   const lesson = useLoaderData();
   const navigate = useNavigate();
   const axiosSecure = useAxiosSecure();
+  const { user } = useAuth();
   const { id } = useParams();
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["lesson", id],
+
     queryFn: async () => {
       const res = await axiosSecure.get(`/lessons/${id}`);
       return res.data;
     },
+
+    // auto refetch every 2 second
+    refetchInterval: 2000,
   });
-  console.log(data);
 
-const { data: creatorLessons = [] } = useQuery({
-  queryKey: ["lesson", data?.email],
+  const { data: creatorLessons = [] } = useQuery({
+    queryKey: ["lesson", data?.email],
 
-  enabled: !!data?.email,
+    enabled: !!data?.email,
+
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/lessons?email=${data.email}`);
+
+      return res.data;
+    },
+  });
+// comment
+
+// COMMENT QUERY
+const {
+  data: comments = [],
+  refetch: commentsRefetch,
+} = useQuery({
+  queryKey: ["comments", id],
 
   queryFn: async () => {
+
     const res = await axiosSecure.get(
-      `/lessons?email=${data.email}`
+      `/comments/${id}`
     );
 
     return res.data;
   },
 });
 
-console.log(creatorLessons);
-
-
-
   const [liked, setLiked] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [likesCount, setLikesCount] = useState(lesson?.likesCount || 0);
+  const [likesCount, setLikesCount] = useState(data?.reactions || 0);
 
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      name: "Rahim",
-      comment: "Very inspiring lesson ❤️",
-    },
-    {
-      id: 2,
-      name: "Karim",
-      comment: "This helped me a lot!",
-    },
-  ]);
+//   const [comments, setComments] = useState([
+//     {
+//       id: 1,
+//       name: "Rahim",
+//       comment: "Very inspiring lesson ❤️",
+//     },
+//     {
+//       id: 2,
+//       name: "Karim",
+//       comment: "This helped me a lot!",
+//     },
+//   ]);
 
   const { register, handleSubmit, reset } = useForm();
 
-  // premium check
-  //   const isPremiumLesson = lesson?.access === "premium";
+ 
+ const handleLike = async () => {
 
-  //   random views
-  //   const views = Math.floor(Math.random() * 10000);
-
-  // like handler
-  const handleLike = () => {
-    if (!user) {
-      Swal.fire({
-        icon: "warning",
-        title: "Please Login First",
-      });
-
-      navigate("/login");
-      return;
-    }
-
-    if (liked) {
-      setLiked(false);
-      setLikesCount(likesCount - 1);
-    } else {
-      setLiked(true);
-      setLikesCount(likesCount + 1);
-    }
-
-    // backend update example
-    // axios.patch(`/lessons/like/${lesson._id}`)
-  };
-
-  // favorite handler
-  const handleFavorite = () => {
-    setSaved(!saved);
+  if (!user) {
 
     Swal.fire({
-      icon: "success",
-      title: saved ? "Removed from favorites" : "Added to favorites",
-      timer: 1500,
-      showConfirmButton: false,
+      icon: "warning",
+      title: "Please Login First",
     });
-  };
+
+    navigate("/login");
+
+    return;
+  }
+
+  try {
+
+    const res = await axiosSecure.patch(
+      `/lessons/like/${data._id}`
+    );
+
+    if (res.data.modifiedCount > 0) {
+
+      refetch();
+
+      Swal.fire({
+        icon: "success",
+        title: "Liked Successfully",
+        timer: 1000,
+        showConfirmButton: false,
+      });
+    }
+
+  } catch (error) {
+
+    console.log(error);
+  }
+};
+
+  // favorite handler
+ const handleFavorite = async () => {
+
+  if (!user) {
+
+    Swal.fire({
+      icon: "warning",
+      title: "Please Login First",
+    });
+
+    navigate("/login");
+
+    return;
+  }
+
+  try {
+
+    const res = await axiosSecure.patch(
+      `/lessons/favorite/${data._id}`
+    );
+
+    if (res.data.modifiedCount > 0) {
+      refetch();
+
+      Swal.fire({
+        icon: "success",
+        title: "Added To Favorites",
+        timer: 1000,
+        showConfirmButton: false,
+      });
+    }
+
+    
+
+  } catch (error) {
+
+    console.log(error);
+  }
+};
 
   // report handler
   const handleReport = async () => {
@@ -152,24 +206,61 @@ console.log(creatorLessons);
   };
 
   // comment submit
-  const onSubmit = (data) => {
-    const newComment = {
-      id: Date.now(),
-      name: user?.displayName,
-      comment: data.comment,
-    };
+ const onSubmit = async (formData) => {
 
-    setComments([newComment, ...comments]);
-
-    reset();
+  if (!user) {
 
     Swal.fire({
-      icon: "success",
-      title: "Comment Added",
-      timer: 1200,
-      showConfirmButton: false,
+      icon: "warning",
+      title: "Please Login First",
     });
+
+    navigate("/login");
+
+    return;
+  }
+
+  const commentInfo = {
+
+    lessonId: id,
+
+    userName: user?.displayName,
+
+    userEmail: user?.email,
+
+    userPhoto: user?.photoURL,
+
+    comment: formData.comment,
+
+    createdAt: new Date(),
   };
+
+  try {
+
+    const res = await axiosSecure.post(
+      "/comments",
+      commentInfo
+    );
+
+    if (res.data.insertedId) {
+
+      commentsRefetch();
+
+      reset();
+
+      Swal.fire({
+        icon: "success",
+        title: "Comment Added",
+        timer: 1200,
+        showConfirmButton: false,
+      });
+    }
+
+  } catch (error) {
+
+    console.log(error);
+  }
+};
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -237,7 +328,9 @@ console.log(creatorLessons);
           <div>
             <h2 className="text-2xl font-bold">{data?.creatorName}</h2>
 
-            <p className="text-[20px] font-semibold ">Total Lessons : {creatorLessons.length}</p>
+            <p className="text-[20px] font-semibold ">
+              Total Lessons : {creatorLessons.length}
+            </p>
           </div>
         </div>
 
@@ -322,35 +415,82 @@ console.log(creatorLessons);
 
       {/* COMMENT SECTION */}
       <div className="mt-16">
-        <h2 className="text-4xl font-bold mb-8">Comments</h2>
 
-        {/* comment form */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="bg-base-200 p-6 rounded-3xl"
-        >
-          <textarea
-            {...register("comment")}
-            className="textarea textarea-bordered w-full h-32"
-            placeholder="Write your comment..."
-          ></textarea>
+  <h2 className="text-4xl font-bold mb-8">
+    Comments
+  </h2>
 
-          <button className="btn btn-primary mt-4 rounded-full">
-            Post Comment
-          </button>
-        </form>
+  <form
+    onSubmit={handleSubmit(onSubmit)}
+    className="bg-base-200 p-6 rounded-3xl"
+  >
 
-        {/* comments */}
-        <div className="space-y-5 mt-8">
-          {comments.map((comment) => (
-            <div key={comment.id} className="bg-base-200 p-5 rounded-2xl">
-              <h3 className="font-bold text-lg">{comment.name}</h3>
+    <textarea
+      {...register("comment", {
+        required: true,
+      })}
+      className="textarea textarea-bordered w-full h-32"
+      placeholder="Write your comment..."
+    ></textarea>
 
-              <p className="mt-2 text-gray-500">{comment.comment}</p>
-            </div>
-          ))}
+    <button className="btn btn-primary mt-4 rounded-full">
+
+      Post Comment
+
+    </button>
+
+  </form>
+
+</div>
+<div className="space-y-5 mt-8">
+
+  {
+    comments.map((comment) => (
+
+      <div
+        key={comment._id}
+        className="bg-base-200 p-5 rounded-2xl"
+      >
+
+        <div className="flex items-center gap-4">
+
+          <img
+            src={comment?.userPhoto}
+            alt=""
+            className="w-14 h-14 rounded-full"
+          />
+
+          <div>
+
+            <h3 className="font-bold text-lg">
+
+              {comment?.userName}
+
+            </h3>
+
+            <p className="text-sm text-gray-500">
+
+              {new Date(
+                comment?.createdAt
+              ).toLocaleString()}
+
+            </p>
+
+          </div>
+
         </div>
+
+        <p className="mt-4 text-gray-500">
+
+          {comment?.comment}
+
+        </p>
+
       </div>
+    ))
+  }
+
+</div>
 
       {/* SIMILAR LESSONS */}
       <div className="mt-20">

@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import axios from "axios";
+import Swal from "sweetalert2";
 // import Swal from "sweetalert2";
 // import Swal from "sweetalert2";
 
@@ -51,11 +52,11 @@ const AddLesson = () => {
     console.log(res.data.insertedId);
 
     if (res.data.insertedId) {
-      //   Swal.fire({
-      //     title: "Drag me!",
-      //     icon: "success",
-      //     draggable: true,
-      //   });
+        Swal.fire({
+          title: "Add Lesson Successful",
+          icon: "success",
+          draggable: true,
+        });
       reset();
       navigate("/dashboard/my-lessons");
     }
