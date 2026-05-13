@@ -22,6 +22,7 @@ import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import useAuth from "../../Hooks/useAuth";
+import axios from "axios";
 
 const LessonDetails = () => {
   const lesson = useLoaderData();
@@ -131,42 +132,38 @@ const {
 };
 
   // favorite handler
- const handleFavorite = async () => {
+const handleFavorite = async () => {
 
-  if (!user) {
+  const favoriteInfo = {
+
+    lessonId: data._id,
+
+    userEmail: user?.email,
+
+    title: data?.title,
+
+    image: data?.image,
+
+    createdAt: new Date(),
+  };
+
+  const res = await axiosSecure.patch(
+    `/lessons/favorite/${data._id}`,
+    favoriteInfo
+  );
+
+  if (
+    res.data.updateResult.modifiedCount > 0
+  ) {
+
+    refetch();
 
     Swal.fire({
-      icon: "warning",
-      title: "Please Login First",
+      icon: "success",
+      title: "Added To Favorite",
+      timer: 1000,
+      showConfirmButton: false,
     });
-
-    navigate("/login");
-
-    return;
-  }
-
-  try {
-
-    const res = await axiosSecure.patch(
-      `/lessons/favorite/${data._id}`
-    );
-
-    if (res.data.modifiedCount > 0) {
-      refetch();
-
-      Swal.fire({
-        icon: "success",
-        title: "Added To Favorites",
-        timer: 1000,
-        showConfirmButton: false,
-      });
-    }
-
-    
-
-  } catch (error) {
-
-    console.log(error);
   }
 };
 
@@ -190,18 +187,21 @@ const {
     if (reason) {
       // backend payload
       const reportData = {
-        lessonId: lesson._id,
+        lessonId: data._id,
         reportedUserEmail: data?.email,
         reason,
         timestamp: new Date(),
       };
 
-      console.log(reportData);
-
-      Swal.fire({
+      const res = await axiosSecure.post('/report',reportData);
+      
+        Swal.fire({
         icon: "success",
         title: "Report Submitted",
       });
+     
+
+      
     }
   };
 
