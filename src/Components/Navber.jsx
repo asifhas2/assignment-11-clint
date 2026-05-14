@@ -49,10 +49,8 @@ const Navber = () => {
           Public Lessons
         </li>
       </NavLink>
-      <NavLink  to="/upgrade">
-        <li className="text-[16px] font-semibold btn btn-ghost">
-          Upgrade
-        </li>
+      <NavLink to="/upgrade">
+        <li className="text-[16px] font-semibold btn btn-ghost">Upgrade</li>
       </NavLink>
     </>
   );
@@ -85,8 +83,14 @@ const Navber = () => {
             {links}
           </ul>
         </div>
-
-        <a className="btn btn-ghost text-xl">daisyUI</a>
+        <Link className="flex justify-center items-end gap-1">
+          <img
+            className="w-12 rounded-4xl"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWEtVbiEIkmX1Py9MeNUnkzt0SDc3AzpyLsg&s"
+            alt=""
+          />
+          <div className="font-bold text-xl">LifeStoryHub</div>
+        </Link>
       </div>
 
       <div className="navbar-center hidden lg:flex">
@@ -94,22 +98,22 @@ const Navber = () => {
       </div>
 
       <div className="navbar-end">
-       <div className="mx-3">
-         {/* Conditional Upgrade Button */}
-        { users?.plan !== "premium" && (
-          <NavLink to="/upgrade">
-            <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 shadow-[0_0_20px_rgba(168,85,247,0.6)] hover:shadow-[0_0_30px_rgba(236,72,153,0.8)] hover:scale-105 transition-all duration-300">
-              Free
-            </button>
-          </NavLink>
-        )}
+        <div className="mx-3">
+          {/* Conditional Upgrade Button */}
+          {users?.plan !== "premium" && (
+            <NavLink to="/upgrade">
+              <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 shadow-[0_0_20px_rgba(168,85,247,0.6)] hover:shadow-[0_0_30px_rgba(236,72,153,0.8)] hover:scale-105 transition-all duration-300">
+                Free
+              </button>
+            </NavLink>
+          )}
 
-        { users?.plan === "premium" && (
-          <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 shadow-[0_0_20px_rgba(168,85,247,0.6)] hover:shadow-[0_0_30px_rgba(236,72,153,0.8)] hover:scale-105 transition-all duration-300">
-            🚀 Go Premium
-          </button>
-        )}
-       </div>
+          {users?.plan === "premium" && (
+            <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 shadow-[0_0_20px_rgba(168,85,247,0.6)] hover:shadow-[0_0_30px_rgba(236,72,153,0.8)] hover:scale-105 transition-all duration-300">
+              🚀 Go Premium
+            </button>
+          )}
+        </div>
         {user ? (
           <div className="dropdown dropdown-end">
             <div

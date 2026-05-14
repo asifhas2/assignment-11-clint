@@ -49,7 +49,7 @@ const Profile = () => {
   const axiosSecure = useAxiosSecure();
   //   console.log(user);
 
-  const { data } = useQuery({
+  const { data=[] } = useQuery({
     queryKey: ["lesson", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/lessons?email=${user?.email}`);

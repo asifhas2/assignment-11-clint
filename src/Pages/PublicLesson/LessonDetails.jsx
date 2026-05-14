@@ -31,6 +31,16 @@ const LessonDetails = () => {
   const { user } = useAuth();
   const { id } = useParams();
 
+  const { data: lessons = [] } = useQuery({
+    queryKey: ["lessons"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/lessons");
+      return res.data;
+    },
+  });
+
+  console.log(lessons);
+
   const { data, refetch } = useQuery({
     queryKey: ["lesson", id],
 
@@ -54,6 +64,8 @@ const LessonDetails = () => {
       return res.data;
     },
   });
+
+  console.log(data);
   // comment
 
   // COMMENT QUERY
@@ -125,7 +137,7 @@ const LessonDetails = () => {
 
       title: data?.title,
       category: data?.category,
-        tone:data?.tone,
+      tone: data?.tone,
       image: data?.image,
 
       createdAt: new Date(),
@@ -229,6 +241,18 @@ const LessonDetails = () => {
       console.log(error);
     }
   };
+
+  const similarLessons = lessons
+    .filter((lesson) => {
+      return (
+        lesson._id !== data?._id && 
+        (lesson.category === data?.category ||
+          lesson.tone === data?.tone)
+      );
+    })
+    .slice(0, 6);
+
+  console.log(similarLessons);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -427,36 +451,57 @@ const LessonDetails = () => {
       </div>
 
       {/* SIMILAR LESSONS */}
+
       <div className="mt-20">
         <h2 className="text-4xl font-bold mb-10">Similar Lessons</h2>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((item) => (
+          {similarLessons.slice(0, 6).map((item) => (
             <div
-              key={item}
-              className="card bg-base-200 shadow-xl hover:-translate-y-2 duration-300"
+              key={item._id}
+              className="card bg-base-200 shadow-xl hover:-translate-y-2 transition-all duration-300"
             >
-              <figure>
-                <img
-                  src="https://i.ibb.co/F4s3wJm/pexels.jpg"
-                  alt=""
-                  className="h-52 w-full object-cover"
-                />
-              </figure>
+         
+                <div className="card-body">
+                {/* Category + Tone */}
+                <div className="flex justify-between">
+                  <div className="badge badge-secondary">{item?.category}</div>
 
-              <div className="card-body">
-                <div className="badge badge-secondary">Mindset</div>
+                  <div className="badge badge-primary">{item?.tone}</div>
+                </div>
 
-                <h2 className="card-title">Never Give Up On Yourself</h2>
+                {/* Title */}
+                <h2 className="card-title mt-2">{item?.title}</h2>
 
-                <p>Small daily progress creates big future success.</p>
+                {/* Description */}
+                <p className="text-sm text-gray-500">
+                  {item?.description?.slice(0, 120)}...
+                </p>
 
+                {/* Stats */}
+                <div className="flex justify-between mt-4 text-sm text-gray-600">
+                  <span>❤️ {item?.reactions} reactions</span>
+                  <span>🔖 {item?.saves} saves</span>
+                </div>
+
+                {/* Creator */}
+                <div className="flex items-center gap-3 mt-4">
+                  <img
+                    src={item?.creatorPhoto}
+                    alt="creator"
+                    className="w-8 h-8 rounded-full"
+                  />
+                  <p className="text-xs text-gray-500">{item?.creatorName}</p>
+                </div>
+
+                {/* Button */}
                 <div className="card-actions justify-end mt-4">
                   <button className="btn btn-primary btn-sm rounded-full">
                     View Details
                   </button>
                 </div>
               </div>
+            
             </div>
           ))}
         </div>
