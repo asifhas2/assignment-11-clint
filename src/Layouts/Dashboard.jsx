@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaClipboardList, FaRegBookmark, FaRegPlusSquare } from 'react-icons/fa';
+import { FaClipboardList, FaRegBookmark, FaRegPlusSquare, FaUserCircle } from 'react-icons/fa';
 import { Link, Outlet } from 'react-router';
 
 const Dashboard = () => {
@@ -56,6 +56,14 @@ const Dashboard = () => {
           <FaRegBookmark/>
 
             <span className="is-drawer-close:hidden"> My Favorites</span>
+          </Link>
+        </li>
+        <li>
+          <Link to='/dashboard/profile' className="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip=" My-Favorites">
+            {/* Home icon */}
+          <FaUserCircle/>
+
+            <span className="is-drawer-close:hidden"> Profile</span>
           </Link>
         </li>
 

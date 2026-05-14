@@ -132,7 +132,7 @@ const Navber = () => {
 
               <li>
                 <Link
-                  to="/profile"
+                  to="/dashboard/profile"
                   className="justify-between text-[16px] font-semibold"
                 >
                   Profile

@@ -12,6 +12,7 @@ import PaymentSuccess from "../Pages/Dashboard/User Dashboard/PaymentSuccess";
 import PaymentCenceld from "../Pages/Dashboard/User Dashboard/PaymentCenceld";
 import Details from "../Pages/PublicLesson/LessonDetails";
 import MyFavorite from "../Pages/Dashboard/User Dashboard/MyFavorite";
+import Profile from "../Pages/Dashboard/User Dashboard/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ export const router = createBrowserRouter([
       {
         path: "my-favorite",
         Component: MyFavorite,
+      },
+      {
+        path: "profile",
+        Component: Profile,
       },
       {
         path: "payment-success",
