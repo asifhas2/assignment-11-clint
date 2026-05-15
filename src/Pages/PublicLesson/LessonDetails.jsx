@@ -183,6 +183,9 @@ const LessonDetails = () => {
         lessonId: data._id,
         reportedUserEmail: data?.email,
         reason,
+        creatorName: data?.creatorName,
+        title:data?.title,
+
         timestamp: new Date(),
       };
 
@@ -245,9 +248,8 @@ const LessonDetails = () => {
   const similarLessons = lessons
     .filter((lesson) => {
       return (
-        lesson._id !== data?._id && 
-        (lesson.category === data?.category ||
-          lesson.tone === data?.tone)
+        lesson._id !== data?._id &&
+        (lesson.category === data?.category || lesson.tone === data?.tone)
       );
     })
     .slice(0, 6);
@@ -461,8 +463,7 @@ const LessonDetails = () => {
               key={item._id}
               className="card bg-base-200 shadow-xl hover:-translate-y-2 transition-all duration-300"
             >
-         
-                <div className="card-body">
+              <div className="card-body">
                 {/* Category + Tone */}
                 <div className="flex justify-between">
                   <div className="badge badge-secondary">{item?.category}</div>
@@ -501,7 +502,6 @@ const LessonDetails = () => {
                   </button>
                 </div>
               </div>
-            
             </div>
           ))}
         </div>

@@ -6,6 +6,7 @@ import {
   FaHeart,
   FaEdit,
   FaEye,
+  FaLock,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { Link } from "react-router";

@@ -13,6 +13,11 @@ import PaymentCenceld from "../Pages/Dashboard/User Dashboard/PaymentCenceld";
 import Details from "../Pages/PublicLesson/LessonDetails";
 import MyFavorite from "../Pages/Dashboard/User Dashboard/MyFavorite";
 import Profile from "../Pages/Dashboard/User Dashboard/Profile";
+import UsersManegment from "../Pages/Dashboard/Admin Dashboard/UsersManegment";
+import PrivateRoute from "../Pages/PrivateRoute";
+import DashBoardHome from "../Pages/Dashboard/DashBoardHome";
+import ManageLessons from "../Pages/Dashboard/Admin Dashboard/ManageLessons";
+import FlaggedLesson from "../Pages/Dashboard/Admin Dashboard/FlaggedLesson";
 
 export const router = createBrowserRouter([
   {
@@ -29,12 +34,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "/public-lessons/:id",
-        Component: Details,
+       element:<PrivateRoute><Details></Details></PrivateRoute>
      
       },
       {
         path: "/upgrade",
-        Component: Pricing,
+        element:<PrivateRoute><Pricing></Pricing></PrivateRoute>
       },
       {
         path: "/login",
@@ -48,8 +53,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard></Dashboard>,
+    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
     children: [
+      {
+        index:true,
+        Component:DashBoardHome
+      },
       {
         path: "add-lesson",
         Component: AddLesson,
@@ -73,7 +82,20 @@ export const router = createBrowserRouter([
       {
            path:'payment-cancel',
            element:<PaymentCenceld></PaymentCenceld>
-      }
+      },
+      {
+           path:'user-management',
+           element:<UsersManegment></UsersManegment>
+      },
+      {
+           path:'manage-lessons',
+           element:<ManageLessons></ManageLessons>
+      },
+      {
+           path:'flagged-lesson',
+           element:<FlaggedLesson></FlaggedLesson>
+      },
+
     ],
   },
 ]);
