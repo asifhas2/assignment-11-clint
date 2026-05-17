@@ -150,6 +150,19 @@ const Dashboard = () => {
                     </span>
                   </Link>
                 </li>
+                <li>
+              <Link
+                to="/dashboard/profile"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip=" My-Favorites"
+              >
+                {/* Home icon */}
+                <FaUserCircle />
+
+                <span className="is-drawer-close:hidden"> Profile</span>
+              </Link>
+            </li>
+
               </>:
 
               <>
