@@ -18,6 +18,7 @@ import PrivateRoute from "../Pages/PrivateRoute";
 import DashBoardHome from "../Pages/Dashboard/DashBoardHome";
 import ManageLessons from "../Pages/Dashboard/Admin Dashboard/ManageLessons";
 import FlaggedLesson from "../Pages/Dashboard/Admin Dashboard/FlaggedLesson";
+import AdminPrivateRout from "../Pages/AdminPrivateRout";
 
 export const router = createBrowserRouter([
   {
@@ -85,15 +86,15 @@ export const router = createBrowserRouter([
       },
       {
            path:'user-management',
-           element:<UsersManegment></UsersManegment>
+           element:<AdminPrivateRout><UsersManegment></UsersManegment></AdminPrivateRout>
       },
       {
            path:'manage-lessons',
-           element:<ManageLessons></ManageLessons>
+           element:<AdminPrivateRout><ManageLessons></ManageLessons></AdminPrivateRout>
       },
       {
            path:'flagged-lesson',
-           element:<FlaggedLesson></FlaggedLesson>
+           element:<AdminPrivateRout><FlaggedLesson></FlaggedLesson></AdminPrivateRout>
       },
 
     ],

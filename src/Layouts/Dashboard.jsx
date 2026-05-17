@@ -105,7 +105,7 @@ const Dashboard = () => {
                 <span className="is-drawer-close:hidden">Homepage</span>
               </Link>
             </li>
-            {data?.role === "admin" && (
+            {data?.role === "admin" ? 
               <>
                 <li>
                   <Link
@@ -150,9 +150,10 @@ const Dashboard = () => {
                     </span>
                   </Link>
                 </li>
-              </>
-            )}
-            <li>
+              </>:
+
+              <>
+               <li>
               <Link
                 to="/dashboard/add-lesson"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
@@ -228,6 +229,11 @@ const Dashboard = () => {
                 <span className="is-drawer-close:hidden">Settings</span>
               </button>
             </li>
+              </>
+            
+            
+            }
+           
           </ul>
         </div>
       </div>

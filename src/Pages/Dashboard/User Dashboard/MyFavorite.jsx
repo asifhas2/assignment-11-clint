@@ -6,41 +6,18 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
-const initialLessons = [
-  {
-    _id: "1",
-    title: "Learning from mistakes",
-    category: "Mindset",
-    tone: "Realization",
-    createdAt: "2026-05-10",
-  },
-  {
-    _id: "2",
-    title: "Never give up",
-    category: "Career",
-    tone: "Motivational",
-    createdAt: "2026-05-11",
-  },
-  {
-    _id: "3",
-    title: "Relationship balance",
-    category: "Relationships",
-    tone: "Sad",
-    createdAt: "2026-05-12",
-  },
-];
+
 
 const MyFavorite = () => {
-  const [favorites, setFavorites] = useState(initialLessons);
-
   const [category, setCategory] = useState("All");
   const [tone, setTone] = useState("All");
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   console.log(user);
 
-  const { data } = useQuery({
+  const { data,refetch } = useQuery({
     queryKey: ["favorite", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -52,11 +29,25 @@ const MyFavorite = () => {
   });
   console.log(data);
 
-  // Remove from favorites
-  const handleRemove = (id) => {
-    const updated = favorites.filter((item) => item._id !== id);
-    setFavorites(updated);
-  };
+  const handleRemove = async (id) => {
+  try {
+    const res = await axiosSecure.delete(`/lessons/favorite/${id}`);
+
+    if (res.data.deletedCount > 0) {
+     Swal.fire({
+  title: "Delete successful!",
+  text: "You clicked the button!",
+  icon: "success"
+});
+
+      refetch();
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+ 
 
   // Filter logic
   const filteredLessons = data?.filter((lesson) => {
@@ -110,7 +101,7 @@ const MyFavorite = () => {
                   <td className="flex gap-3">
                     {/* Details */}
                     <Link
-                      to={`/lesson/${lesson._id}`}
+                  to={`/public-lessons/${lesson._id}`}
                       className="btn btn-sm btn-info"
                     >
                       <FaEye />
