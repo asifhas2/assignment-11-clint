@@ -208,12 +208,12 @@ const UserDashboardHome = () => {
                     </p>
                   </div>
 
-                  {/* <Link
-                    to={`/lesson/${lesson._id}`}
+                  <Link
+                    to={`/public-lessons/${lesson._id}`}
                     className="btn btn-sm btn-primary"
                   >
                     <FaArrowRight />
-                  </Link> */}
+                  </Link>
                 </div>
               ))}
 

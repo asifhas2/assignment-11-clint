@@ -215,7 +215,7 @@ const MyLessons = () => {
                       <div className="flex gap-2">
                         {/* details */}
                         <Link
-                          to={`/lesson/${lesson._id}`}
+                          to={`/public-lessons/${lesson._id}`}
                           className="btn btn-sm btn-info"
                         >
                           <FaEye />
