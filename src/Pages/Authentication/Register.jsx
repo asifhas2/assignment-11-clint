@@ -1,13 +1,16 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 import SocialLogin from "./SocialLogin";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const axiosSecure = useAxiosSecure();
   const { user, updateUserProfile } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const { registerEmailPassword } = useAuth();
 
@@ -26,7 +29,13 @@ const Register = () => {
         // console.log(userInfo);
 
         axiosSecure.post("/users", userInfo).then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
+          navigate(location.state?.from || "/");
+          Swal.fire({
+            title: "Register successful !",
+            text: "You clicked the button!",
+            icon: "success",
+          });
         });
 
         // update user profile
@@ -36,18 +45,23 @@ const Register = () => {
           email: data.email,
           photoURL: data.photo,
           password: data.password,
-          role:"user"
+          role: "user",
         };
         updateUserProfile(userProfile)
           .then(() => {
-            console.log("user profile updated");
+            // console.log("user profile updated");
+            Swal.fire({
+              title: "Update Profile Successful !",
+              text: "You clicked the button!",
+              icon: "success",
+            });
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
           });
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 

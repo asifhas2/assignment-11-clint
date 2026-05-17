@@ -1,19 +1,28 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "./SocialLogin";
 import useAuth from "../../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const { signInEmailPassword } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handelLogin = (data) => {
-    signInEmailPassword(data.email, data.password).then((res) => {
-      console.log(res);
-    })
-    .catch(error=>{
+    signInEmailPassword(data.email, data.password)
+      .then((res) => {
+        Swal.fire({
+          title: "Login successful !",
+          text: "You clicked the button!",
+          icon: "success",
+        });
+        navigate(location.state?.from || "/");
+      })
+      .catch((error) => {
         console.log(error);
-    })
+      });
   };
 
   const {
@@ -25,10 +34,10 @@ const Login = () => {
     <div className="min-h-screen flex justify-center items-center">
       <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl  ">
         <div className="card-body">
-            <h1 className="text-3xl font-bold text-center mb-3">Please Login Now !</h1>
+          <h1 className="text-3xl font-bold text-center mb-3">
+            Please Login Now !
+          </h1>
           <form onSubmit={handleSubmit(handelLogin)} className="fieldset">
-           
-
             <label className="label">Email</label>
             <input
               type="email"
@@ -36,7 +45,7 @@ const Login = () => {
               className="input"
               placeholder="Email"
             />
-             <label className="label">Password</label>
+            <label className="label">Password</label>
             <input
               type="password"
               {...register("password", { required: true })}

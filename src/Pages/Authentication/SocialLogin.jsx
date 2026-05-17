@@ -1,16 +1,18 @@
 import React from "react";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router";
 
 const SocialLogin = () => {
   const { signInGoogle } = useAuth();
-  const axiosSecure=useAxiosSecure();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handelSignInGoogle = () => {
     signInGoogle()
       .then((data) => {
-        
-
         // console.log(userInfo);
         const userInfo = {
           email: data.user.email,
@@ -19,7 +21,15 @@ const SocialLogin = () => {
         };
 
         axiosSecure.post("/users", userInfo).then((res) => {
-          console.log("user data has been store ", res.data);
+          // console.log("user data has been store ", res.data);
+
+          Swal.fire({
+            title: "Login Successful!",
+            text: "You clicked the button!",
+            icon: "success",
+          });
+
+          navigate(location.state?.from || "/");
         });
       })
       .catch((error) => {

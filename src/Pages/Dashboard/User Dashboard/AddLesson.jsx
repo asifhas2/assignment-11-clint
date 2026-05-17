@@ -163,7 +163,8 @@ const AddLesson = () => {
             <label className="font-semibold mb-2 block">Image (Optional)</label>
 
             <input
-              type="file"
+              type="text"
+              placeholder="Enter your image URL"
               className="file-input file-input-bordered w-full"
               {...register("image")}
             />
