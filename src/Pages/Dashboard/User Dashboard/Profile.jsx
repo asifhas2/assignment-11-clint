@@ -50,7 +50,7 @@ const Profile = () => {
   const axiosSecure = useAxiosSecure();
   //   console.log(user);
 
-  const { data=[] } = useQuery({
+  const { data = [] } = useQuery({
     queryKey: ["lesson", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/lessons?email=${user?.email}`);
@@ -77,7 +77,7 @@ const Profile = () => {
     },
   });
 
-  console.log(data);
+  console.log(users);
 
   const {
     register,
@@ -133,14 +133,17 @@ const Profile = () => {
             />
 
             {/* Premium Badge */}
-            {users?.plan === "premium" ? (
+            {/* Admin / Premium Badge */}
+            {users?.role === "admin" ? (
+              <div className="absolute -top-2 -right-2 badge badge-error gap-1 p-4 text-white font-bold">
+                Admin
+              </div>
+            ) : users?.plan === "premium" ? (
               <div className="absolute -top-2 -right-2 badge badge-warning gap-1 p-4 text-black font-bold">
                 <FaCrown />
                 Premium
               </div>
-            ) : (
-              ""
-            )}
+            ) : null}
           </div>
 
           {/* Right */}
