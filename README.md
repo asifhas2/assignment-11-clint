@@ -1,16 +1,40 @@
-# React + Vite
+# LifeStoryHub 📚
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern learning platform where students can explore lessons, save educational content, and improve their skills through an interactive and responsive user experience.
 
-Currently, two official plugins are available:
+## 🌐 Live Website
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+👉 https://assignment-11-85789.web.app/
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Features
 
-## Expanding the ESLint configuration
+* 🔐 User Authentication system with Login & Registration
+* 📚 Browse and explore different learning lessons
+* ❤️ Save favorite lessons for quick access later
+* 💳 Payment success and cancel page integration
+* 🎨 Modern responsive UI with Tailwind CSS & Framer Motion animations
+* 📱 Fully responsive for mobile, tablet, and desktop devices
+* ⚡ Fast performance using React and Vite
+* 🛡️ Protected private routes for authenticated users
+* 🌙 Beautiful interactive animations and smooth user experience
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Technologies Used
+
+* React.js
+* React Router
+* Tailwind CSS
+* Firebase Authentication
+* Framer Motion
+* React Icons
+* daisyui
+
+
+## 📧 Contact
+
+If you have any suggestions or feedback, feel free to contact me.
+
+© 2026 LifeStoryHub. All rights reserved.
