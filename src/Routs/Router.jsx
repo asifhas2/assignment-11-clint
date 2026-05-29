@@ -19,6 +19,7 @@ import DashBoardHome from "../Pages/Dashboard/DashBoardHome";
 import ManageLessons from "../Pages/Dashboard/Admin Dashboard/ManageLessons";
 import FlaggedLesson from "../Pages/Dashboard/Admin Dashboard/FlaggedLesson";
 import AdminPrivateRout from "../Pages/AdminPrivateRout";
+import NotFound from "../Components/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -98,5 +99,9 @@ export const router = createBrowserRouter([
       },
 
     ],
+  },
+   {
+    path: "*",
+    element: <NotFound />,
   },
 ]);

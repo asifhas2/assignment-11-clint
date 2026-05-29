@@ -89,7 +89,7 @@ const Navber = () => {
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWEtVbiEIkmX1Py9MeNUnkzt0SDc3AzpyLsg&s"
             alt=""
           />
-          <div className="font-bold text-xl">LifeStoryHub</div>
+          <div className="font-bold text-xl hidden md:block ">LifeStoryHub</div>
         </Link>
       </div>
 
