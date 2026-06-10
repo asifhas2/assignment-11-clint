@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLoaderData, useNavigate, useParams } from "react-router";
+import { Link, useLoaderData, useNavigate, useParams } from "react-router";
 import { useForm } from "react-hook-form";
 // import Swal from "sweetalert2";
 import {
@@ -184,7 +184,7 @@ const LessonDetails = () => {
         reportedUserEmail: data?.email,
         reason,
         creatorName: data?.creatorName,
-        title:data?.title,
+        title: data?.title,
 
         timestamp: new Date(),
       };
@@ -328,9 +328,9 @@ const LessonDetails = () => {
           </div>
         </div>
 
-        <button className="btn btn-primary rounded-full">
+        <Link to="/public-lessons" className="btn btn-primary rounded-full">
           View All Lessons
-        </button>
+        </Link>
       </div>
 
       {/* STATS */}
@@ -497,9 +497,12 @@ const LessonDetails = () => {
 
                 {/* Button */}
                 <div className="card-actions justify-end mt-4">
-                  <button className="btn btn-primary btn-sm rounded-full">
-                    View Details
-                  </button>
+                  <Link
+                    to={`/public-lessons/${item._id}`}
+                    className="btn btn-sm w-full bg-indigo-600 text-white hover:bg-indigo-700"
+                  >
+                    See Details
+                  </Link>
                 </div>
               </div>
             </div>
