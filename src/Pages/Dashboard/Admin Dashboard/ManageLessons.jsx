@@ -120,9 +120,7 @@ const ManageLessons = () => {
       const visibilityMatch =
         visibilityFilter === "all" || lesson.privacy === visibilityFilter;
 
-    
-
-      return categoryMatch && visibilityMatch ;
+      return categoryMatch && visibilityMatch;
     });
   }, [lessons, categoryFilter, visibilityFilter]);
 
@@ -134,8 +132,6 @@ const ManageLessons = () => {
   const privateLessons = lessons.filter(
     (lesson) => lesson.privacy === "private",
   ).length;
-
-
 
   if (isLoading) {
     return (
@@ -165,7 +161,7 @@ const ManageLessons = () => {
         {/* public */}
         <motion.div
           whileHover={{ scale: 1.03 }}
-          className="card bg-gradient-to-r from-primary to-secondary text-black shadow-xl"
+          className="card bg-gradient-to-r from-primary to-secondary text-base-content shadow-xl"
         >
           <div className="card-body">
             <FaBookOpen className="text-4xl" />

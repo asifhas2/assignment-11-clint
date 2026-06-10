@@ -47,9 +47,7 @@ export function TopContributors() {
         viewport={{ once: true }}
         className="text-center mb-8"
       >
-        <h2 className="text-3xl font-bold">
-          🏆 Top Contributors
-        </h2>
+        <h2 className="text-3xl font-bold">🏆 Top Contributors</h2>
 
         <p className="text-gray-500 mt-2">
           Most active community members this week
@@ -72,7 +70,7 @@ export function TopContributors() {
               y: -5,
             }}
             viewport={{ once: true }}
-            className="relative overflow-hidden rounded-2xl bg-white shadow-lg border border-gray-100 p-6"
+            className="relative overflow-hidden rounded-2xl bg-base-100 shadow-lg border border-gray-100 p-6"
           >
             {/* Glow Effect */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full blur-3xl opacity-40"></div>
@@ -82,9 +80,7 @@ export function TopContributors() {
               <div className="flex items-center gap-2">
                 {medals[index]}
 
-                <span className="font-bold text-lg">
-                  #{index + 1}
-                </span>
+                <span className="font-bold text-lg">#{index + 1}</span>
               </div>
 
               <div className="flex items-center gap-1 text-orange-500 font-semibold">
@@ -102,9 +98,7 @@ export function TopContributors() {
                 className="w-24 h-24 rounded-full object-cover border-4 border-blue-100 shadow-md"
               />
 
-              <h3 className="mt-4 text-xl font-bold">
-                {user.displayName}
-              </h3>
+              <h3 className="mt-4 text-xl font-bold">{user.displayName}</h3>
 
               <p className="text-gray-500 text-sm mt-1">
                 Top Community Contributor
@@ -117,7 +111,7 @@ export function TopContributors() {
                   <span>{user.points}/1000</span>
                 </div>
 
-                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                <div className="w-full bg-base-300 rounded-full h-3 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{

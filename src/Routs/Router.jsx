@@ -51,6 +51,14 @@ export const router = createBrowserRouter([
         path: "/register",
         Component: Register,
       },
+      {
+        path: "/payment-success",
+        element: <PaymentSuccess></PaymentSuccess>,
+      },
+      {
+           path:'/payment-cancel',
+           element:<PaymentCenceld></PaymentCenceld>
+      },
     ],
   },
   {
@@ -76,14 +84,6 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         Component: Profile,
-      },
-      {
-        path: "payment-success",
-        element: <PaymentSuccess></PaymentSuccess>,
-      },
-      {
-           path:'payment-cancel',
-           element:<PaymentCenceld></PaymentCenceld>
       },
       {
            path:'user-management',

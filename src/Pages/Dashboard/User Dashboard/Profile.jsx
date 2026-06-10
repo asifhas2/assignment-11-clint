@@ -139,7 +139,7 @@ const Profile = () => {
                 Admin
               </div>
             ) : users?.plan === "premium" ? (
-              <div className="absolute -top-2 -right-2 badge badge-warning gap-1 p-4 text-black font-bold">
+              <div className="absolute -top-2 -right-2 badge badge-warning gap-1 p-4 text-base-content font-bold">
                 <FaCrown />
                 Premium
               </div>

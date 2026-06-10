@@ -28,7 +28,7 @@ export function MostSavedLessons() {
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="p-6 bg-white rounded-2xl shadow-xl mt-6 border"
+      className="p-6 bg-base-100 rounded-2xl shadow-xl mt-6 border"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">

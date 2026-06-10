@@ -3,8 +3,12 @@ import { Link, NavLink } from "react-router";
 import useAuth from "../Hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../Hooks/useAxiosSecure";
+import useTheme from "../Hooks/useTheme";
+import { FaMoon, FaSun } from "react-icons/fa";
+
 
 const Navber = () => {
+  const { theme, toggleTheme } = useTheme();
   const { user, logOut } = useAuth();
   const axiosSecure = useAxiosSecure();
 
@@ -56,7 +60,7 @@ const Navber = () => {
   );
 
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div  className="navbar sticky top-0 z-50 bg-base-100 shadow-sm">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -97,81 +101,97 @@ const Navber = () => {
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
 
-      <div className="navbar-end">
-        <div className="mx-3">
-          {/* Conditional Upgrade Button */}
-          {users?.plan !== "premium" && (
-            <NavLink to="/upgrade">
-              <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 shadow-[0_0_20px_rgba(168,85,247,0.6)] hover:shadow-[0_0_30px_rgba(236,72,153,0.8)] hover:scale-105 transition-all duration-300">
-                Free
-              </button>
-            </NavLink>
-          )}
+     <div className="navbar-end">
 
-          {users?.plan === "premium" && (
-            <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0 shadow-[0_0_20px_rgba(168,85,247,0.6)] hover:shadow-[0_0_30px_rgba(236,72,153,0.8)] hover:scale-105 transition-all duration-300">
-              🚀 Go Premium
-            </button>
-          )}
+  {/* Theme Toggle */}
+
+  <button
+    onClick={toggleTheme}
+    className="btn btn-circle btn-ghost mr-3"
+  >
+    {theme === "light" ? (
+      <FaMoon size={18} />
+    ) : (
+      <FaSun size={18} />
+    )}
+  </button>
+
+  <div className="mx-3">
+    {users?.plan !== "premium" && (
+      <NavLink to="/upgrade">
+        <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0">
+          Free
+        </button>
+      </NavLink>
+    )}
+
+    {users?.plan === "premium" && (
+      <button className="btn bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white border-0">
+        🚀 Premium
+      </button>
+    )}
+  </div>
+
+  {user ? (
+    <div className="dropdown dropdown-end">
+      <div
+        tabIndex={0}
+        role="button"
+        className="btn btn-ghost btn-circle avatar"
+      >
+        <div className="w-10 rounded-full">
+          <img
+            alt="User"
+            src={user?.photoURL}
+          />
         </div>
-        {user ? (
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img alt="User" src={user?.photoURL} />
-              </div>
-            </div>
-
-            <ul
-              tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <p className="text-[16px] font-semibold">{user?.displayName}</p>
-              </li>
-
-              <li>
-                <Link
-                  to="/dashboard/profile"
-                  className="justify-between text-[16px] font-semibold"
-                >
-                  Profile
-                  <span className="badge">New</span>
-                </Link>
-              </li>
-
-              <li>
-                <Link to="/dashboard" className="text-[16px] font-semibold">
-                  Dashboard
-                </Link>
-              </li>
-
-              <li>
-                <button
-                  onClick={handelLogout}
-                  className="text-[16px] font-semibold"
-                >
-                  Logout
-                </button>
-              </li>
-            </ul>
-          </div>
-        ) : (
-          <div className="flex gap-2">
-            <NavLink to="/login">
-              <span className="btn">Login</span>
-            </NavLink>
-
-            <NavLink to="/register">
-              <span className="btn">Signup</span>
-            </NavLink>
-          </div>
-        )}
       </div>
+
+      <ul
+        tabIndex={0}
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+      >
+        <li>
+          <p className="font-semibold">
+            {user?.displayName}
+          </p>
+        </li>
+
+        <li>
+          <Link to="/dashboard/profile">
+            Profile
+          </Link>
+        </li>
+
+        <li>
+          <Link to="/dashboard">
+            Dashboard
+          </Link>
+        </li>
+
+        <li>
+          <button onClick={handelLogout}>
+            Logout
+          </button>
+        </li>
+      </ul>
+    </div>
+  ) : (
+    <div className="flex gap-2">
+      <NavLink to="/login">
+        <button className="btn">
+          Login
+        </button>
+      </NavLink>
+
+      <NavLink to="/register">
+        <button className="btn btn-primary">
+          Signup
+        </button>
+      </NavLink>
+    </div>
+  )}
+</div>
     </div>
   );
 };
