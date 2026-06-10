@@ -13,6 +13,7 @@ import FeaturedGrid from "./FeaturedGrid";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import StatsSection from "./StatsSection";
+import HowItWorks from "./HowItWorks";
 
 // Register ScrollTrigger plugin safely
 if (typeof window !== "undefined") {
@@ -161,6 +162,8 @@ const Home = () => {
           ))}
         </div>
       </section>
+    {/**how it work section  */}
+    <HowItWorks></HowItWorks>
 
       {/* FAQ Section */}
       <section ref={faqRef} className="py-12 px-6 max-w-4xl mx-auto">

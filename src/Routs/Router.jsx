@@ -20,6 +20,11 @@ import ManageLessons from "../Pages/Dashboard/Admin Dashboard/ManageLessons";
 import FlaggedLesson from "../Pages/Dashboard/Admin Dashboard/FlaggedLesson";
 import AdminPrivateRout from "../Pages/AdminPrivateRout";
 import NotFound from "../Components/NotFound";
+import About from "../Components/About ";
+import Terms from "../Components/Terms";
+import { path } from "framer-motion/client";
+import PrivacyPolicy from "../Components/PrivacyPolicy";
+import SupportCenter from "../Components/SupportCenter";
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +64,22 @@ export const router = createBrowserRouter([
            path:'/payment-cancel',
            element:<PaymentCenceld></PaymentCenceld>
       },
+      {
+        path:'/about',
+        Component:About
+      },
+      {
+        path:'/terms',
+        Component:Terms
+      },
+      {
+        path:'/privacy',
+        Component:PrivacyPolicy
+      },
+      {
+        path:'/support',
+        Component:SupportCenter
+      }
     ],
   },
   {

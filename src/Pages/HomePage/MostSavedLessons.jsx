@@ -22,78 +22,93 @@ const savedLessons = [
   },
 ];
 
+const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, x: -40, scale: 0.95 },
+  show: {
+    opacity: 1,
+    x: 0,
+    scale: 1,
+    transition: { duration: 0.5 },
+  },
+};
+
 export function MostSavedLessons() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="p-6 bg-base-100 rounded-2xl shadow-xl mt-6 border"
+      className="p-6 bg-card border border-border rounded-2xl shadow-sm mt-6 text-foreground"
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
+
         <div>
           <h2 className="text-2xl font-bold flex items-center gap-2">
-            <Bookmark className="text-blue-500" />
+            <Bookmark className="text-indigo-500" />
             Most Saved Lessons
           </h2>
 
-          <p className="text-gray-500 text-sm mt-1">
+          <p className="text-muted-foreground text-sm mt-1">
             Students’ favorite learning content
           </p>
         </div>
 
         <motion.div
           animate={{ scale: [1, 1.1, 1] }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-          }}
-          className="bg-orange-100 p-3 rounded-full"
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="bg-indigo-500/10 p-3 rounded-full"
         >
-          <Flame className="text-orange-500" />
+          <Flame className="text-indigo-500" />
         </motion.div>
       </div>
 
       {/* Lessons */}
-      <div className="space-y-4">
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="space-y-4"
+      >
         {savedLessons.map((lesson, index) => (
           <motion.div
             key={lesson.id}
-            initial={{ opacity: 0, x: -40 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{
-              delay: index * 0.2,
-              type: "spring",
-              stiffness: 120,
-            }}
-            whileHover={{
-              scale: 1.02,
-              y: -3,
-            }}
-            className="relative overflow-hidden rounded-xl border p-4 bg-gray-50 hover:shadow-lg transition-all"
+            variants={item}
+            whileHover={{ scale: 1.02, y: -4 }}
+            className="relative overflow-hidden rounded-xl border border-border p-4 bg-card transition-all"
           >
-            {/* Background Glow */}
+            {/* Glow Background */}
             <div
               className={`absolute inset-0 opacity-10 bg-gradient-to-r ${lesson.color}`}
-            ></div>
+            />
 
             <div className="relative flex items-center justify-between">
+
               {/* Left */}
               <div className="flex items-center gap-4">
+
                 <motion.div
-                  whileHover={{ rotate: 10 }}
-                  className={`w-12 h-12 rounded-full bg-gradient-to-r ${lesson.color} flex items-center justify-center text-white font-bold`}
+                  whileHover={{ rotate: 10, scale: 1.1 }}
+                  className={`w-12 h-12 rounded-full bg-gradient-to-r ${lesson.color} flex items-center justify-center text-white font-bold shadow-md`}
                 >
                   {index + 1}
                 </motion.div>
 
                 <div>
-                  <h3 className="font-semibold text-gray-800">
+                  <h3 className="font-semibold">
                     {lesson.title}
                   </h3>
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-muted-foreground text-sm">
                     Popular among students
                   </p>
                 </div>
@@ -102,7 +117,7 @@ export function MostSavedLessons() {
               {/* Right */}
               <motion.div
                 whileTap={{ scale: 0.9 }}
-                className="flex items-center gap-2 text-pink-500 font-bold text-lg"
+                className="flex items-center gap-2 text-pink-500 font-semibold text-lg"
               >
                 <Heart className="fill-pink-500" size={20} />
                 {lesson.saves}
@@ -110,7 +125,7 @@ export function MostSavedLessons() {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </motion.div>
   );
 }

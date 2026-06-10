@@ -133,28 +133,28 @@ const Footer = () => {
             <div className="flex gap-4">
               
               <a
-                href="#"
+                href="https://www.facebook.com/bfinit/"
                 className="w-11 h-11 rounded-full bg-slate-800 hover:bg-blue-500 transition flex items-center justify-center"
               >
                 <FaFacebookF />
               </a>
 
               <a
-                href="#"
+                href="https://www.instagram.com/technology/?hl=en"
                 className="w-11 h-11 rounded-full bg-slate-800 hover:bg-pink-500 transition flex items-center justify-center"
               >
                 <FaInstagram />
               </a>
 
               <a
-                href="#"
+                href="https://www.linkedin.com/in/asif-hasan-840738380/"
                 className="w-11 h-11 rounded-full bg-slate-800 hover:bg-sky-500 transition flex items-center justify-center"
               >
                 <FaLinkedinIn />
               </a>
 
               <a
-                href="#"
+                href="https://github.com/enterprise"
                 className="w-11 h-11 rounded-full bg-slate-800 hover:bg-gray-700 transition flex items-center justify-center"
               >
                 <FaGithub />
