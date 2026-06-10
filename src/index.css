@@ -1,2 +1,12 @@
 @import "tailwindcss";
 @import "daisyui/daisyui.css";
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-\[shimmer_1\.5s_infinite\] {
+  animation: shimmer 1.5s infinite;
+}

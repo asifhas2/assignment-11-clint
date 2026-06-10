@@ -280,7 +280,7 @@ const LessonDetails = () => {
 
         <div>
           <img
-            src={lesson?.image}
+            src={data?.image}
             alt=""
             className="w-full rounded-3xl shadow-2xl object-cover"
           />
