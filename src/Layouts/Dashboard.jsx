@@ -75,7 +75,7 @@ const Dashboard = () => {
                 className=" is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Homepage"
               >
-               <p className="text-3xl font-bold ">LifeStoryHub</p>
+                <p className="text-3xl font-bold ">LifeStoryHub</p>
               </Link>
             </li>
             <li>
@@ -101,7 +101,7 @@ const Dashboard = () => {
                 <span className="is-drawer-close:hidden">Homepage</span>
               </Link>
             </li>
-            {data?.role === "admin" ? 
+            {data?.role === "admin" ? (
               <>
                 <li>
                   <Link
@@ -138,8 +138,7 @@ const Dashboard = () => {
                     data-tip="Flagged-Lesson"
                   >
                     {/* Home icon */}
-                   <MdReportProblem />
-
+                    <MdReportProblem />
 
                     <span className="is-drawer-close:hidden">
                       Flagged-Lesson
@@ -147,102 +146,127 @@ const Dashboard = () => {
                   </Link>
                 </li>
                 <li>
-              <Link
-                to="/dashboard/profile"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip=" My-Favorites"
-              >
-                {/* Home icon */}
-                <FaUserCircle />
+                  <Link
+                    to="/dashboard/profile"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip=" My-Favorites"
+                  >
+                    {/* Home icon */}
+                    <FaUserCircle />
 
-                <span className="is-drawer-close:hidden"> Profile</span>
-              </Link>
-            </li>
-
-              </>:
-
-              <>
-               <li>
-              <Link
-                to="/dashboard/add-lesson"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Add-Lesson"
-              >
-                {/* Home icon */}
-
-                <FaRegPlusSquare />
-
-                <span className="is-drawer-close:hidden">Add-Lesson</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/dashboard/my-lessons"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="My-Lesson"
-              >
-                {/* Home icon */}
-
-                <FaClipboardList />
-
-                <span className="is-drawer-close:hidden">My Lesson</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/dashboard/my-favorite"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip=" My-Favorites"
-              >
-                {/* Home icon */}
-                <FaRegBookmark />
-
-                <span className="is-drawer-close:hidden"> My Favorites</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/dashboard/profile"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip=" My-Favorites"
-              >
-                {/* Home icon */}
-                <FaUserCircle />
-
-                <span className="is-drawer-close:hidden"> Profile</span>
-              </Link>
-            </li>
-
-            {/* List item */}
-            <li>
-              <button
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Settings"
-              >
-                {/* Settings icon */}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  fill="none"
-                  stroke="currentColor"
-                  className="my-1.5 inline-block size-4"
-                >
-                  <path d="M20 7h-9"></path>
-                  <path d="M14 17H5"></path>
-                  <circle cx="17" cy="17" r="3"></circle>
-                  <circle cx="7" cy="7" r="3"></circle>
-                </svg>
-                <span className="is-drawer-close:hidden">Settings</span>
-              </button>
-            </li>
+                    <span className="is-drawer-close:hidden"> Profile</span>
+                  </Link>
+                </li>
+                 <li>
+                  <Link
+                  to='/dashboard/adminSettings'
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Settings"
+                  >
+                    {/* Settings icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      fill="none"
+                      stroke="currentColor"
+                      className="my-1.5 inline-block size-4"
+                    >
+                      <path d="M20 7h-9"></path>
+                      <path d="M14 17H5"></path>
+                      <circle cx="17" cy="17" r="3"></circle>
+                      <circle cx="7" cy="7" r="3"></circle>
+                    </svg>
+                    <span className="is-drawer-close:hidden">Settings</span>
+                  </Link>
+                </li>
               </>
-            
-            
-            }
-           
+            ) : (
+              <>
+                <li>
+                  <Link
+                    to="/dashboard/add-lesson"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Add-Lesson"
+                  >
+                    {/* Home icon */}
+
+                    <FaRegPlusSquare />
+
+                    <span className="is-drawer-close:hidden">Add-Lesson</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/my-lessons"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="My-Lesson"
+                  >
+                    {/* Home icon */}
+
+                    <FaClipboardList />
+
+                    <span className="is-drawer-close:hidden">My Lesson</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/my-favorite"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip=" My-Favorites"
+                  >
+                    {/* Home icon */}
+                    <FaRegBookmark />
+
+                    <span className="is-drawer-close:hidden">
+                      {" "}
+                      My Favorites
+                    </span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/dashboard/profile"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip=" My-Favorites"
+                  >
+                    {/* Home icon */}
+                    <FaUserCircle />
+
+                    <span className="is-drawer-close:hidden"> Profile</span>
+                  </Link>
+                </li>
+
+                {/* List item */}
+                <li>
+                  <Link
+                  to='/dashboard/userSettings'
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Settings"
+                  >
+                    {/* Settings icon */}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      fill="none"
+                      stroke="currentColor"
+                      className="my-1.5 inline-block size-4"
+                    >
+                      <path d="M20 7h-9"></path>
+                      <path d="M14 17H5"></path>
+                      <circle cx="17" cy="17" r="3"></circle>
+                      <circle cx="7" cy="7" r="3"></circle>
+                    </svg>
+                    <span className="is-drawer-close:hidden">Settings</span>
+                  </Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>

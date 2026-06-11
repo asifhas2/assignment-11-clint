@@ -25,6 +25,8 @@ import Terms from "../Components/Terms";
 import { path } from "framer-motion/client";
 import PrivacyPolicy from "../Components/PrivacyPolicy";
 import SupportCenter from "../Components/SupportCenter";
+import AdminSettings from "../Pages/Dashboard/Admin Dashboard/AdminSettings";
+import UserSettings from "../Pages/Dashboard/User Dashboard/UserSettings";
 
 export const router = createBrowserRouter([
   {
@@ -41,12 +43,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "/public-lessons/:id",
-       element:<Details></Details>
-     
+        element: <Details></Details>,
       },
       {
         path: "/upgrade",
-        element:<PrivateRoute><Pricing></Pricing></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Pricing></Pricing>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
@@ -61,34 +66,38 @@ export const router = createBrowserRouter([
         element: <PaymentSuccess></PaymentSuccess>,
       },
       {
-           path:'/payment-cancel',
-           element:<PaymentCenceld></PaymentCenceld>
+        path: "/payment-cancel",
+        element: <PaymentCenceld></PaymentCenceld>,
       },
       {
-        path:'/about',
-        Component:About
+        path: "/about",
+        Component: About,
       },
       {
-        path:'/terms',
-        Component:Terms
+        path: "/terms",
+        Component: Terms,
       },
       {
-        path:'/privacy',
-        Component:PrivacyPolicy
+        path: "/privacy",
+        Component: PrivacyPolicy,
       },
       {
-        path:'/support',
-        Component:SupportCenter
-      }
+        path: "/support",
+        Component: SupportCenter,
+      },
     ],
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
     children: [
       {
-        index:true,
-        Component:DashBoardHome
+        index: true,
+        Component: DashBoardHome,
       },
       {
         path: "add-lesson",
@@ -107,21 +116,44 @@ export const router = createBrowserRouter([
         Component: Profile,
       },
       {
-           path:'user-management',
-           element:<AdminPrivateRout><UsersManegment></UsersManegment></AdminPrivateRout>
+        path: "user-management",
+        element: (
+          <AdminPrivateRout>
+            <UsersManegment></UsersManegment>
+          </AdminPrivateRout>
+        ),
       },
       {
-           path:'manage-lessons',
-           element:<AdminPrivateRout><ManageLessons></ManageLessons></AdminPrivateRout>
+        path: "manage-lessons",
+        element: (
+          <AdminPrivateRout>
+            <ManageLessons></ManageLessons>
+          </AdminPrivateRout>
+        ),
       },
       {
-           path:'flagged-lesson',
-           element:<AdminPrivateRout><FlaggedLesson></FlaggedLesson></AdminPrivateRout>
+        path: "flagged-lesson",
+        element: (
+          <AdminPrivateRout>
+            <FlaggedLesson></FlaggedLesson>
+          </AdminPrivateRout>
+        ),
       },
-
+      {
+        path: "adminSettings",
+        element: (
+          <AdminPrivateRout>
+            <AdminSettings />
+          </AdminPrivateRout>
+        ),
+      },
+      {
+        path: "userSettings",
+        element: <UserSettings />,
+      },
     ],
   },
-   {
+  {
     path: "*",
     element: <NotFound />,
   },
