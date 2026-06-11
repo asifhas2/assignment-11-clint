@@ -8,7 +8,7 @@ const Slider = () => {
     <div className="w-full relative">
 
       {/* Glow background effect */}
-      <div className="absolute w-72 h-72 bg-primary/20 blur-3xl rounded-full top-10 left-10 z-0"></div>
+      <div className="absolute w-72 h-52 bg-primary/20 blur-3xl rounded-full top-10 left-10 z-0"></div>
 
       <Carousel
         autoPlay
@@ -23,7 +23,7 @@ const Slider = () => {
       >
 
         {/* Slide 1 */}
-        <div className="relative h-[400px] md:h-[500px] lg:h-[600px]">
+        <div className="relative h-[300px] md:h-[300px] lg:h-[350px]">
           <img
             src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
             className="w-full h-full object-cover"
@@ -50,7 +50,7 @@ const Slider = () => {
         </div>
 
         {/* Slide 2 */}
-        <div className="relative h-[400px] md:h-[500px] lg:h-[600px]">
+        <div className="relative h-[300px] md:h-[300px] lg:h-[350px]">
           <img
             src="https://images.unsplash.com/photo-1506784365847-bbad939e9335"
             className="w-full h-full object-cover"
@@ -77,7 +77,7 @@ const Slider = () => {
         </div>
 
         {/* Slide 3 */}
-        <div className="relative h-[300px] md:h-[500px] lg:h-[600px]">
+        <div className="relative h-[300px] md:h-[300px] lg:h-[350px]">
           <img
             src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
             className="w-full h-full object-cover"
@@ -104,7 +104,7 @@ const Slider = () => {
         </div>
 
         {/* Slide 4 */}
-        <div className="relative h-[400px] md:h-[500px] lg:h-[600px]">
+        <div className="relative h-[300px] md:h-[300px] lg:h-[350px]">
           <img
             src="https://images.unsplash.com/photo-1522071820081-009f0129c71c"
             className="w-full h-full object-cover"
